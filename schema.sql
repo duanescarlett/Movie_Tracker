@@ -26,7 +26,6 @@ CREATE TABLE movies (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-
 -- Actors Table
 CREATE TABLE actors (
     id BIGSERIAL PRIMARY KEY,
