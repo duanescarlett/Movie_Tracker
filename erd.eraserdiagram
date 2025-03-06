@@ -1,0 +1,108 @@
+entity-relationship-diagram
+
+users [icon: user, color: blue] {
+  id string pk
+  username string
+  email string
+  password string
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+movies [icon: film, color: blue] {
+  id string pk
+  title string
+  release_year number
+  runtime_minutes number
+  studio_id string fk
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+actors [icon: home] {
+  id string pk
+  name string
+  birth_date date
+  createdAt timestamp
+}
+
+movie_actors [icon: folder] {
+  movie_id string fk
+  actor_id string fk
+}
+
+directors [icon: message-circle, color: green] {
+  id string pk
+  name string
+  birth_date date
+  createdAt timestamp
+}
+
+movie_directors [icon: mail, color: green] {
+  movie_id string fk
+  director_id string fk
+}
+
+studios [icon: message-square, color: green] {
+  id string pk
+  name string
+  createdAt timestamp
+}
+
+genres [icon: message-square, color: green] {
+  id string pk
+  name string
+}
+
+movie_genres [icon: message-square, color: green] {
+  movie_id string fk
+  genre_id string fk
+}
+
+ratings [icon: message-square, color: green] {
+  id string pk
+  movie_id string fk
+  source enum
+  rating number
+  user_id string fk
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+user_actions [icon: message-square, color: green] {
+  id string pk
+  user_id string fk
+  action enum
+  movie_id string fk
+  createdAt timestamp
+}
+
+movie_comments [icon: message-square, color: green] {
+  id string pk
+  user_id string fk
+  movie_id string fk
+  comment string
+  createdAt timestamp
+  updatedAt timestamp
+}
+
+// users.teams <> teams.id
+// workspaces.folderId > folders.id
+// workspaces.teamId > teams.id
+// chat.workspaceId > workspaces.id
+// invite.workspaceId > workspaces.id
+// invite.inviterId > users.id
+
+movies.id > movie_actors.movie_id
+actors.id > movie_actors.actor_id
+movies.id > movie_directors.movie_id
+directors.id > movie_directors.director_id
+studios.id > movies.studio_id
+users.id > ratings.user_id
+movies.id > ratings.movie_id
+users.id > user_actions.user_id
+movies.id > user_actions.movie_id
+genres.id > movie_genres.genre_id
+movies.id > movie_genres.movie_id
+users.id > movie_comments.user_id
+movies.id > movie_comments.movie_id

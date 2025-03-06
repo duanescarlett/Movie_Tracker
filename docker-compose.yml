@@ -1,0 +1,18 @@
+services:
+  database:
+    image: postgres:alpine
+    container_name: sms-postgres
+    ports:
+      - "5431:5432"
+    volumes:
+      - sms-postgres-data:/var/lib/postgresql/data 
+    # env_file: 
+    #   - ./.env
+    environment:
+      POSTGRES_DB: sms-postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_DB_PASSWORD}
+
+volumes:
+  sms-postgres-data:
+    driver: local
