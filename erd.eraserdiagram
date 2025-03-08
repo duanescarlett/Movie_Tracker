@@ -86,6 +86,13 @@ movie_comments [icon: message-square, color: green] {
   updatedAt timestamp
 }
 
+movie_likes [icon: message-square, color: green] {
+  id string pk
+  user_id string fk
+  movie_id string fk
+  createdAt timestamp
+}
+
 // users.teams <> teams.id
 // workspaces.folderId > folders.id
 // workspaces.teamId > teams.id
@@ -106,3 +113,6 @@ genres.id > movie_genres.genre_id
 movies.id > movie_genres.movie_id
 users.id > movie_comments.user_id
 movies.id > movie_comments.movie_id
+users.id > movie_likes.user_id
+movies.id > movie_likes.movie_id
+```
