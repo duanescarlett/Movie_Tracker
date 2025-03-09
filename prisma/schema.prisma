@@ -13,6 +13,11 @@ datasource db {
   url      = env("POSTGRES_DB_URL")
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
 model User {
   id        BigInt   @id @default(autoincrement())
   username  String   @unique @db.VarChar(50)
@@ -20,9 +25,10 @@ model User {
   password  String   @db.VarChar(255)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
-  ratings   Rating?
-  actions   UserAction?
-  comments  MovieComment?
+  ratings   Rating[]
+  actions   UserAction[]
+  comments  MovieComment[]
+  role UserRole @default(USER)
 }
 
 model Studio {
@@ -128,3 +134,6 @@ model MovieComment {
   user      User    @relation(fields: [userId], references: [id])
   movie     Movie   @relation(fields: [movieId], references: [id])
 }
+
+
+

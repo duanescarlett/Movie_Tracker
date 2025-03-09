@@ -1,6 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import Link from 'next/link';
+import React, { useState, useActionState } from 'react';
+import { signin } from '@/app/(auth)/sign-in/actions';
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -65,7 +67,12 @@ export default function Login() {
           disabled={loading}
         >
           {loading ? 'Logging in...' : 'Login'}
+          
         </button>
+        <div>
+          <p>Dont have an account?</p>
+          <Link href="/sign-up" className="text-blue-600 hover:underline">Sign Up</Link>
+        </div>
       </form>
     </div>
   );

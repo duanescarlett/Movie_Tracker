@@ -14,7 +14,8 @@ const createUser = async (user: NewUser) => {
         const data = await res.json();
 
         if (data.success) {
-            return data.success;
+            data.user = user;
+            return data;
         } else {
             return data.error;
         }

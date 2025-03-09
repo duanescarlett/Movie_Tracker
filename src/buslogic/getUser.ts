@@ -3,8 +3,8 @@ import { NewUser } from "@/interfaceTypes/types";
 const getUser = async (user: NewUser) => {
     // const user = await currentUser()
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create`, {
-            method: "POST",
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/read`, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -14,7 +14,7 @@ const getUser = async (user: NewUser) => {
         const data = await res.json();
 
         if (data.success) {
-            return data.success;
+            return data.user;
         } else {
             return data.error;
         }
