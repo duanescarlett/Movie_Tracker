@@ -3,6 +3,7 @@ import Link from 'next/link'
 import MobileMenu from '@/app/components/MobileMenu'
 import Image from 'next/image'
 import { ClerkLoaded, ClerkLoading } from '@clerk/nextjs'
+
 // import { SignedIn, SignedOut } from '@clerk/clerk-react'
 import {
     ClerkProvider,
@@ -12,7 +13,11 @@ import {
     SignedOut,
     UserButton,
   } from '@clerk/nextjs'
+import { NextResponse } from 'next/server'
 const Navbar = () => {
+
+    
+    
     return (
         <div className='h-24 flex items-center justify-between textStyleBold'>
             {/* LEFT */}

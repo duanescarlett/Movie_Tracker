@@ -4,16 +4,21 @@
   "private": true,
   "scripts": {
     "dev": "docker compose up -d && next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.12.4",
     "@prisma/client": "^6.4.1",
+    "dotenv": "^16.4.7",
     "next": "15.2.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

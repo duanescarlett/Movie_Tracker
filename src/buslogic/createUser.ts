@@ -1,0 +1,38 @@
+import { NewUser } from "@/interfaceTypes/types";
+
+const createUser = async (user: NewUser) => {
+    // const user = await currentUser()
+    try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/create`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: user.email, username: user.username, password: user.password }),
+        })
+
+        const data = await res.json();
+
+        if (data.success) {
+            return data.success;
+        } else {
+            return data.error;
+        }
+    } catch (error) {
+        console.error(error);
+        return error;
+    }
+}
+
+export default createUser;
+
+    // try {
+    //   const response = await fetch('/api/create', {
+    //     method: 'POST',
+    //     body: JSON.stringify(formData),
+    //   });
+    //   const result = await response.json();
+    //   setMessage(result.message || 'Registration successful!');
+    // } catch (error) {
+    //   setMessage('Error submitting form');
+    // }
