@@ -13,3 +13,9 @@ export type StoredUser = {
     actions: [string];
     comments: [string];
 };
+
+export type FilmType = {
+    title: string;
+    year?: string;
+    plot?: string;
+}

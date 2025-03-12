@@ -2,7 +2,6 @@ import 'server-only'
 import { JWTPayload, SignJWT, jwtVerify } from 'jose';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
-import path from 'path';
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET);
 interface SessionPayload extends JWTPayload {}
@@ -35,8 +34,6 @@ export async function encrypt(payload: JWTPayload) {
         .sign(key);
 }
 
-
-
 export async function decrypt(session: string): Promise<SessionPayload | null> {
     try {
         const { payload } = await jwtVerify(session, key, {
@@ -56,6 +53,7 @@ export async function createSession(userId: string) {
     cookieStore.set(cookie.name, session, { 
         ...cookie.options,
      });
+    // verifySession();
     redirect('/');
 }
 
@@ -64,7 +62,7 @@ export async function verifySession() {
     const c: string = cookieStore.get(cookie.name)?.value || '';
     const session = await decrypt(c);
     if (!session?.userId) {
-        redirect('/sign-in');
+        redirect('/auth/sign-in');
     }
     return { isAuth: true, userId: Number(session.userId) };
 }

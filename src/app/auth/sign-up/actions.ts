@@ -1,11 +1,10 @@
 'use server'
 import createUser from '@/buslogic/createUser';
-import bcrypt from 'bcrypt';
-import { SignupFormSchema, FormState } from '@/lib/validations';
+import bcrypt from 'bcryptjs';
+import { SignupFormSchema, FormStateReg } from '@/lib/validations';
 import { createSession } from '../sessions';
-import { userAgent } from 'next/server';
 
-export async function signup(state: FormState, formData: FormData) {
+export async function signup(state: FormStateReg, formData: FormData) {
     // Validate the form data
     const validationResult = SignupFormSchema.safeParse({
         username: formData.get('username'),

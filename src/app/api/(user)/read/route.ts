@@ -1,32 +1,58 @@
-import { NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import bcrypt from "bcrypt";
+import { verifyPassword } from "@/utils/encryption";
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const email = searchParams.get("email");
-  const password = searchParams.get("password");
-
-  if (!email || !password) {
-    return NextResponse.json({ success: false, error: "Email and password are required" }, { status: 400 });
-  }
-
+export async function POST(req: NextRequest) {
   try {
-    const existingUser = await prisma.user.findUnique({ where: { email } });
+    // Parse request body
+    const { email, password } = await req.json();
+
+    if (!email || !password) {
+      return NextResponse.json(
+        { success: false, error: "Email and password are required" },
+        { status: 400 }
+      );
+    }
+
+    // Find user by email
+    const existingUser = await prisma.user.findFirst({
+      where: { email },
+    });
 
     if (!existingUser) {
-      return NextResponse.json({ success: false, error: "User not found" }, { status: 404 });
+      return NextResponse.json(
+        { success: false, error: "User not found" },
+        { status: 404 }
+      );
     }
 
-    // Compare the provided password with the hashed password in the database
-    const passwordMatch = await bcrypt.compare(password, existingUser.password);
+    // Compare hashed password
+    const passwordMatch = await verifyPassword(password, existingUser.password);
+    console.log("Password Match.......")
+    console.log(passwordMatch)
+    console.log("Password from Database", existingUser.password)
+    console.log("Password from User", password)
     if (!passwordMatch) {
-      return NextResponse.json({ success: false, error: "Incorrect password" }, { status: 401 });
+      return NextResponse.json(
+        { success: false, error: "Incorrect password" },
+        { status: 401 }
+      );
     }
 
-    return NextResponse.json({ success: true, user: existingUser });
+    // Exclude the password before sending the user object
+    const { password: _, ...safeUser } = existingUser;
+
+    return NextResponse.json({ success: true, user: safeUser });
+    
   } catch (error) {
-    console.error("Error fetching user:", error);
-    return NextResponse.json({ success: false, error: "Failed to fetch user" });
+    if (error instanceof Error) {
+      console.error("Error fetching user:", error.message);
+    } else {
+      console.error("Error fetching user:", error);
+    }
+    return NextResponse.json(
+      { success: false, error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

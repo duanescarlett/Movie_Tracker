@@ -1,20 +1,28 @@
 import { NewUser } from "@/interfaceTypes/types";
+import { hashPassword } from "@/utils/encryption";
 
 const getUser = async (user: NewUser) => {
-    // const user = await currentUser()
+    console.log("Fetching user from:", `${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user.email}&password=${user.password}`);
+
     try {
+        // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user.email}&password=${user.password}`)
+        // const hashedPassword = await hashPassword(user.password);
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/read`, {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify({ email: user.email, password: user.password }),
         })
 
+        if(!res.ok) {
+            console.log("Response is not ok!")
+            console.log(res)
+        }
         const data = await res.json();
 
         if (data.success) {
-            return data.user;
+            return JSON.stringify(data.user);
         } else {
             return data.error;
         }
@@ -25,14 +33,3 @@ const getUser = async (user: NewUser) => {
 }
 
 export default getUser;
-
-    // try {
-    //   const response = await fetch('/api/create', {
-    //     method: 'POST',
-    //     body: JSON.stringify(formData),
-    //   });
-    //   const result = await response.json();
-    //   setMessage(result.message || 'Registration successful!');
-    // } catch (error) {
-    //   setMessage('Error submitting form');
-    // }

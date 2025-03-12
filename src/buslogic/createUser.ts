@@ -26,14 +26,3 @@ const createUser = async (user: NewUser) => {
 }
 
 export default createUser;
-
-    // try {
-    //   const response = await fetch('/api/create', {
-    //     method: 'POST',
-    //     body: JSON.stringify(formData),
-    //   });
-    //   const result = await response.json();
-    //   setMessage(result.message || 'Registration successful!');
-    // } catch (error) {
-    //   setMessage('Error submitting form');
-    // }

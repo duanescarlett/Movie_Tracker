@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link"
 import { useState } from "react"
+import AuthBtn from "./AuthBtn"
 
 const MobileMenu = () => {
     const [isOpen, setIsOpen] = useState(false)
@@ -17,9 +18,7 @@ const MobileMenu = () => {
             <Link href="/about">Friends</Link>
             <Link href="/contact">Groups</Link>
             <Link href="/">Stories</Link>
-            <Link href="/">Login</Link>
-            <Link href="/">Home</Link>
-            <Link href="/">Home</Link>
+            <AuthBtn />
         </div>
       )}
     </div>

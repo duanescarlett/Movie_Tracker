@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useActionState } from 'react';
-import { signup } from '@/app/(auth)/sign-up/actions';
+import { signup } from '@/app/auth/sign-up/actions';
 import Link from 'next/link';
 
 const Register = () => {
@@ -16,16 +16,6 @@ const Register = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
-  // const handleSubmit = async () => {
-  //   // e.preventDefault();
-  //   setLoading(true);
-  //   setMessage('');
-
-  //   createUser(formData); // Send this to actions
-
-  //   setLoading(false);
-  // };
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg">
