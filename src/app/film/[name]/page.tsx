@@ -12,6 +12,16 @@ const Page = ({
     const { name } = params;
     const decodedName = decodeURIComponent(name);
     const [Film, setFilm] = useState<Film_Interface | null>(null);
+    const [rating, setRating] = useState<number>(0);
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setRating(Number(e.target.value));
+    };
+
+    const handleSubmitRating = () => {
+        // Handle the rating submission logic here
+        console.log(`Rating submitted: ${rating}`);
+    };
     
     useEffect(() => {
         const fetchFilm = async () => {
@@ -23,23 +33,6 @@ const Page = ({
     }, [name])
 
     return (
-        // <div>
-        //     My URL Segment: { decodedName }
-        //     <section className="flex flex-wrap items-center justify-center p-6 bg-white rounded-lg shadow-lg">
-        //         {Film && (
-        //             <div className="max-w-lg text-center">
-        //                 <Image className="rounded-lg" src={Film.poster} alt={Film.title} width={300} height={450} />
-        //                 <h1 className="mt-6 text-3xl font-bold text-gray-900">{Film.title}</h1>
-        //                 <p className="mt-4 text-gray-700">{Film.plot}</p>
-        //                 <div className="mt-4 flex justify-between text-gray-700">
-        //                     <span>Runtime: {Film.runtime}</span>
-        //                     <span>Year: {Film.year}</span>
-        //                 </div>
-        //             </div>
-        //         )}
-        //     </section>
-        // </div>
-
         <section className="overflow-hidden mt-10 bg-gray-50 sm:grid sm:grid-cols-2">
             {Film && (
                 <>
@@ -54,23 +47,36 @@ const Page = ({
                         </p>
 
                         <div className="mt-4 md:mt-8">
-                            <a
-                                href="#"
-                                className="inline-block rounded-sm bg-emerald-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-emerald-700 focus:ring-3 focus:ring-yellow-400 focus:outline-hidden"
-                            >
-                                Give this film a rating
-                            </a>
+                            <div className="flex items-center space-x-4">
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="100"
+                                    placeholder="Rate 1-100"
+                                    value={rating}
+                                    onChange={handleInputChange}
+                                    className="rounded-sm border-gray-300 px-4 py-2 text-sm focus:ring-emerald-600 focus:border-emerald-600"
+                                />
+                                <button
+                                    onClick={handleSubmitRating}
+                                    className="inline-block rounded-sm bg-emerald-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-emerald-700 focus:ring-3 focus:ring-yellow-400 focus:outline-hidden"
+                                >
+                                    Submit Rating
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <Image
-                    alt={Film.title}
-                    src={Film.poster}
-                    height={375}
-                    width={250}
-                    className="h-56 w-full object-cover sm:h-full"
-                />
+                {Film.poster && (
+                    <img
+                        alt={Film.title}
+                        src={Film.poster}
+                        height={375}
+                        width={250}
+                        className="h-56 w-full object-cover sm:h-full"
+                    />
+                )}
             </>
             )}
         </section>

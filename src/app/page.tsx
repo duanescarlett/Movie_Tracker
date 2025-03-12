@@ -40,7 +40,7 @@ const [isLoading, setIsLoading] = useState(true);
           <div key={index} className="flex justify-center">
             <div className="flex flex-col items-center">
               <Link href={`/film/${film.title}`}>
-                <Image src={film.poster} alt={film.title} width={125} height={187} />
+                <img src={film.poster} alt={film.title} width={125} height={187} />
               </Link>
               <Link href={`/film/${film.title}`}>
                 <h3 className="text-xl font-medium text-center">{film?.title}</h3>

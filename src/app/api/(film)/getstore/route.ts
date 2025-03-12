@@ -59,12 +59,21 @@ export async function POST(req: NextRequest) {
             })
         );
 
+        const existingMovie = await prisma.movie.findFirst({
+            where: { title: movieData.Title },
+        });
+    
+        if (existingMovie) {
+            console.log("Movie already exists in the database.");
+            return existingMovie;
+        }
+        
         // Now, create the movie and associate the actors, directors, and genres
         const movie = await prisma.movie.create({
             data: {
                 title: movieData.Title,
                 year: parseInt(movieData.Year),
-                runtime: parseInt(movieData.Runtime),
+                runtime: parseInt(movieData.Runtime.replace(' min', '')),
                 plot: movieData.Plot,
                 poster: movieData.Poster,
                 actors: {
@@ -86,19 +95,6 @@ export async function POST(req: NextRequest) {
         });
 
         console.log("Movie created:", movie);
-        // Write the data to the database
-        // await prisma.movie.create({
-        //     data: {
-        //         title: movieData.Title,
-        //         year: parseInt(movieData.Year),
-        //         runtime: parseInt(movieData.Runtime),
-        //         plot: movieData.Plot,
-        //         poster: movieData.Poster,
-        //         actors: movieData.Actors,
-        //         directors: movieData.Director,
-        //         genres: movieData.Genre
-        //     }
-        // });
         
         return NextResponse.json(responseBody);
     } catch (error: any) {

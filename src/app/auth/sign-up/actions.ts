@@ -3,6 +3,7 @@ import createUser from '@/buslogic/createUser';
 import bcrypt from 'bcryptjs';
 import { SignupFormSchema, FormStateReg } from '@/lib/validations';
 import { createSession } from '../sessions';
+import { redirect } from 'next/navigation';
 
 export async function signup(state: FormStateReg, formData: FormData) {
     // Validate the form data
@@ -26,6 +27,10 @@ export async function signup(state: FormStateReg, formData: FormData) {
         username: formData.get('username')?.toString() || '', 
         password: hashedPassword || '', 
     });
+
+    if (user) {
+        redirect('/api/auth/signin')
+    }
 
     // Create session
     // await createSession(user.id)

@@ -2,6 +2,7 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import getUser from '@/buslogic/getUser';
 import { hashPassword } from "@/utils/encryption";
+import Email from "next-auth/providers/email";
 // export const authOptions = {
 //   // Configure one or more authentication providers
 //   providers: [
@@ -26,30 +27,55 @@ const handler = NextAuth({
             placeholder: "password"
           }
         },
-        authorize: async (credentials, req) => {
-  
-          // const cols = collection(db, "users")
-          
-            // const cols = collection(db, "users")
-            // const cols = collection(db, "users")
-            
-          console.log(credentials)
+        authorize: async (credentials) => {
+         
           if (!credentials?.password) {
             throw new Error("Password is required");
           }
-          // const hash = await hashPassword(credentials.password);
 
-          const user = await getUser({ 
+          let user = await getUser({ 
             email: credentials?.email || '',  
             password: credentials.password, 
           });
 
-          return user;
+          console.log("GET User: > ", user)
+
+          return user
           
         }
         
       }),
     ],
+    callbacks: {
+      async jwt({ token, user }) {
+        console.log("JWT callback", { token, user })
+        if (user) {
+          return {
+        ...token,
+        id: user.id,
+        name: user.name,
+        email: user.email,
+          };
+        }
+        return token;
+      },
+      async session({ session, token }) {
+        console.log("session callback", { session, token })
+        return {
+          ...session,
+          user: {
+        ...session.user,
+        id: token.id,
+        email: token.email
+          }
+        }
+      }
+    },
+
+    secret: process.env.NEXTAUTH_SECRET,
+    session: {
+      strategy: "jwt",
+    },
   })
   
   export { handler as GET, handler as POST }

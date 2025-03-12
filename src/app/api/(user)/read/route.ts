@@ -28,10 +28,7 @@ export async function POST(req: NextRequest) {
 
     // Compare hashed password
     const passwordMatch = await verifyPassword(password, existingUser.password);
-    console.log("Password Match.......")
-    console.log(passwordMatch)
-    console.log("Password from Database", existingUser.password)
-    console.log("Password from User", password)
+
     if (!passwordMatch) {
       return NextResponse.json(
         { success: false, error: "Incorrect password" },

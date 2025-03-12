@@ -6,15 +6,24 @@ export default function Component() {
   if (session) {
     return (
       <>
-        Signed in as {session?.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        {/* Signed in as {session?.user?.email} <br /> */}
+        <button 
+          onClick={() => signOut()} 
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Sign out
+        </button>
       </>
     )
   }
   return (
     <>
-      Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <button 
+        onClick={() => signIn()} 
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Sign in
+      </button>
     </>
   )
 }
