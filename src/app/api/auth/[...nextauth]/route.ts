@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import getUser from '@/buslogic/getUser';
 import { hashPassword } from "@/utils/encryption";
 import Email from "next-auth/providers/email";
+import { login } from "@/app/auth/auth";
 // export const authOptions = {
 //   // Configure one or more authentication providers
 //   providers: [
@@ -38,6 +39,11 @@ const handler = NextAuth({
             password: credentials.password, 
           });
 
+          if (!user) {
+            throw new Error("No user found");
+          } else {
+            await login(user.email, user.username)
+          }
           console.log("GET User: > ", user)
 
           return user
@@ -46,31 +52,31 @@ const handler = NextAuth({
         
       }),
     ],
-    callbacks: {
-      async jwt({ token, user }) {
-        console.log("JWT callback", { token, user })
-        if (user) {
-          return {
-        ...token,
-        id: user.id,
-        name: user.name,
-        email: user.email,
-          };
-        }
-        return token;
-      },
-      async session({ session, token }) {
-        console.log("session callback", { session, token })
-        return {
-          ...session,
-          user: {
-        ...session.user,
-        id: token.id,
-        email: token.email
-          }
-        }
-      }
-    },
+    // callbacks: {
+    //   async jwt({ token, user }) {
+    //     console.log("JWT callback", { token, user })
+    //     if (user) {
+    //       return {
+    //     ...token,
+    //     id: user.id,
+    //     name: user.name,
+    //     email: user.email,
+    //       };
+    //     }
+    //     return token;
+    //   },
+    //   async session({ session, token }) {
+    //     console.log("session callback", { session, token })
+    //     return {
+    //       ...session,
+    //       user: {
+    //     ...session.user,
+    //     id: token.id,
+    //     email: token.email
+    //       }
+    //     }
+    //   }
+    // },
 
     secret: process.env.NEXTAUTH_SECRET,
     session: {
