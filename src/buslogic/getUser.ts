@@ -16,16 +16,15 @@ const getUser = async (user: NewUser) => {
         })
 
         if(!res.ok) {
-            console.log("Response is not ok!")
-            console.log(res)
-        }
-        const data = await res.json();
-
-        if (data.success) {
-            return JSON.stringify(data.user);
-        } else {
+            // console.log("Response is not ok!")
+            // console.log(res)
+            const data = await res.json();
             return data.error;
+        } else {
+            const data = await res.json();
+            if (data.success) return JSON.stringify(data.user);
         }
+        
     } catch (error) {
         console.error(error);
         return error;

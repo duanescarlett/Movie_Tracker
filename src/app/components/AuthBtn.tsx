@@ -1,8 +1,15 @@
 'use client'
 import { useSession, signIn, signOut } from "next-auth/react"
+import { logout } from "@/app/auth/auth";
 
 export default function Component() {
   const { data: session } = useSession()
+
+  const appentSignOut = async () => {
+    await signOut()
+    
+  }
+
   if (session) {
     return (
       <>

@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export default async function POST(req: NextRequest) {
+export async function POST(req: NextRequest) {
     try {
         const { title } = await req.json();
 
@@ -52,9 +52,9 @@ export default async function POST(req: NextRequest) {
         const genreRecords = await Promise.all(
             genresArray.map(async (name) => {
                 return await prisma.genre.upsert({
-                    where: { name },
+                    where: { name: name },
                     update: {},
-                    create: { name }
+                    create: { name: name }
                 });
             })
         );
@@ -65,7 +65,8 @@ export default async function POST(req: NextRequest) {
     
         if (existingMovie) {
             console.log("Movie already exists in the database.");
-            return existingMovie;
+            // return existingMovie;
+            return NextResponse.json(existingMovie);
         }
 
         // Now, create the movie and associate the actors, directors, and genres
