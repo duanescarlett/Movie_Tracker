@@ -47,6 +47,7 @@ export async function POST(req: NextRequest) {
                 });
             })
         );
+        
 
         // Ensure genres exist
         const genreRecords = await Promise.all(
