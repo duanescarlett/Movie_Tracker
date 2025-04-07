@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "docker compose up -d && prisma generate && next dev --turbopack",
-    "build": "prisma generate && rm -rf .next && next build",
+    "build": "prisma generate --no-engine && rm -rf .next && next build",
     "prisma": "npx prisma studio",
     "prisma-push": "npx prisma db push",
     "prisma-migrate": "npx prisma migrate dev",
