@@ -6,7 +6,7 @@ import Navbar from "@/app/components/Navbar";
 import { getServerSession } from "next-auth"
 // import { getSession } from "@/app/auth/auth";
 import SessionProvider from '@/lib/authProvider';
-import { verifySession } from "@/app/auth/sessions";
+import { Analytics } from "@vercel/analytics/react"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,6 +45,7 @@ export default async function RootLayout({
             
             <div className="w-full bg-white px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
               {children}
+              <Analytics />
             </div>
           </>
         </body>

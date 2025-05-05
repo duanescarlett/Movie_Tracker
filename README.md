@@ -15,7 +15,7 @@ Ensure you have the following installed on your system:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone git@github.com:duanescarlett/Movie_Tracker.git
    cd sms_movie_tracker
    ```
 

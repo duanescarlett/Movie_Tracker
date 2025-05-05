@@ -37,26 +37,28 @@ const handler = NextAuth({
         }
       }),
     ],
-    callbacks: {
-      async jwt({ token, user }) {
-        if (user) {
-          token.id = user.id;
-          token.email = user.email;
-        } 
-        return token;
-      },
-      async session({ session, token }) {
-        if (token && session.user) {
-          session.user.name = token.id as string;
-          session.user.email = token.email;
-        }
-        return session;
-      }
-    },
-    secret: process.env.NEXTAUTH_SECRET,
-    session: {
-      strategy: "jwt",
-    },
+    // callbacks: {
+    //   async jwt({ token, user }) {
+    //     if (user) {
+    //       token.id = user.id;
+    //       token.email = user.email;
+    //       // token.accessToken = user.id
+    //     } 
+    //     return token;
+    //   },
+    //   async session({ session, token }) {
+    //     if (token) {
+    //       session.user = session.user || {}; // Ensure session.user exists
+    //       session.user.name = token.id as string;
+    //       session.user.email = token.email;
+    //     }
+    //     return session;
+    //   }
+    // },
+    // secret: process.env.NEXTAUTH_SECRET,
+    // session: {
+    //   strategy: "jwt",
+    // },
   })
   
   export { handler as GET, handler as POST }
