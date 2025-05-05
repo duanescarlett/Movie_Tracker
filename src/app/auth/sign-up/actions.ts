@@ -33,5 +33,5 @@ export async function signup(state: FormStateReg, formData: FormData) {
     }
 
     // Create session
-    // await createSession(user.id)
+    // await `createSession`(user.id)
 }
