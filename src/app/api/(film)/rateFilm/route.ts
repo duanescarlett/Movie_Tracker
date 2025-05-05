@@ -5,9 +5,13 @@ export async function POST(req: NextRequest) {
     try {
         const { rating, userId, movieId } = await req.json();
         
-        // const existingMovie = await prisma.movie.findFirst({
-        //     where: { title: movieData.Title },
-        // });
+        // Validate rating
+        if (rating < 1 || rating > 10) {
+            return NextResponse.json(
+                { error: "Rating must be between 1 and 10." },
+                { status: 400 }
+            );
+        }
     
         const res = await prisma.rating.create({
             data: {

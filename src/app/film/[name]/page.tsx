@@ -1,9 +1,11 @@
 import getOneFilm from "@/buslogic/getOneFilm";
+import RateFilm from "@/app/components/RateFilm";
+import Image from "next/image";
 
 export default async function Page({ params, }: {
-    params: Promise<{ name: string }>
+  params: Promise<{ name: string }>
 }) {
-    const { name } = await params
+  const { name } = await params
   const decodedName = decodeURIComponent(name);
   const filmData = await getOneFilm(decodedName); // Ensure it is awaited
   const Film = filmData.movie;
@@ -23,14 +25,15 @@ export default async function Page({ params, }: {
             </div>
           </div>
           {Film.poster && (
-            <img
+            <Image
               alt={Film.title}
               src={Film.poster}
-              height={375}
-              width={250}
+              height={100}
+              width={80}
               className="h-56 w-full object-cover sm:h-full"
             />
           )}
+          <RateFilm movieId={Film.id.toString()} userId={Film.userId} />
         </>
       )}
     </section>

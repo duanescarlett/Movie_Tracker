@@ -9,6 +9,11 @@ const rateFilm = async (rating: number, userId: string, movieId: string) => {
             body: JSON.stringify({ rating: rating, userId: userId, movieId: movieId }),
         })
 
+        if (!res.ok) {
+            const errorData = await res.json();
+            return errorData.error || "Failed to submit rating.";
+        }
+
         const data = await res.json();
         // console.log("This is the data from the business login layer: ", data)
         if (res.ok) {

@@ -1,23 +1,18 @@
 import { NewUser } from "@/interfaceTypes/types";
-import { hashPassword } from "@/utils/encryption";
 
 const getUser = async (user: NewUser) => {
     console.log("Fetching user from:", `${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user.email}&password=${user.password}`);
 
     try {
-        // const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user.email}&password=${user.password}`)
-        // const hashedPassword = await hashPassword(user.password);
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/read`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email: user.email, password: user.password }),
-        })
+            body: JSON.stringify({ email: user.email, password: user.password }), // Send raw password
+        });
 
-        if(!res.ok) {
-            // console.log("Response is not ok!")
-            // console.log(res)
+        if (!res.ok) {
             const data = await res.json();
             return data.error;
         } else {

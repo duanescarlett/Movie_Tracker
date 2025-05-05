@@ -8,7 +8,6 @@ const getAllFilms = async () => {
         const data = await res.json();
         console.log("This is the data from the business login layer: ", data)
         if (res.ok) {
-            // data.user = user;
             return data;
         } else {
             return data.error;

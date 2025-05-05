@@ -4,7 +4,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/app/components/Navbar";
 import { getServerSession } from "next-auth"
+// import { getSession } from "@/app/auth/auth";
 import SessionProvider from '@/lib/authProvider';
+import { verifySession } from "@/app/auth/sessions";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,6 +29,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession();
+  // const sessionData = await verifySession();
   return (
     // <ClerkProvider>
       <SessionProvider session={session}>
@@ -36,6 +39,7 @@ export default async function RootLayout({
         >
           <>
             <div className="w-full bg-blue-900 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
+              {/* <Navbar sessionData={sessionData} /> */}
               <Navbar />
             </div>
             

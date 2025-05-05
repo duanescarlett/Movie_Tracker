@@ -62,7 +62,7 @@ export async function verifySession() {
     const c: string = cookieStore.get(cookie.name)?.value || '';
     const session = await decrypt(c);
     if (!session?.userId) {
-        redirect('/auth/sign-in');
+        return { isAuth: false, userId: 0 };
     }
     return { isAuth: true, userId: Number(session.userId) };
 }

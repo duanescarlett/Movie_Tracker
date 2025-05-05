@@ -1,19 +1,23 @@
 'use client'
 import { useSession, signIn, signOut } from "next-auth/react"
-import { logout } from "@/app/auth/auth";
+// import { verifySession } from "@/app/auth/sessions"
+// import { getSession } from "@/app/auth/auth"
 
-export default function Component() {
+// const Component = ({ sessionData }: { sessionData: any }) => {
+const Component = () => {
   const { data: session } = useSession()
-
+  // const sessionData = getSession()
+  // const ans = verifySession()
+  // console.log("This is the session: ", sessionData)
   const appentSignOut = async () => {
     await signOut()
     
   }
 
   if (session) {
+    // console.log("This is the session with cookies :> ", sessionData)
     return (
       <>
-        {/* Signed in as {session?.user?.email} <br /> */}
         <button 
           onClick={() => signOut()} 
           className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
@@ -34,3 +38,5 @@ export default function Component() {
     </>
   )
 }
+
+export default Component;

@@ -2,19 +2,20 @@
 import Link from 'next/link'
 import MobileMenu from '@/app/components/MobileMenu'
 import Image from 'next/image'
-// import { auth } from "@/auth"
 import AuthBtn from './AuthBtn'
-// import { SignedIn, SignedOut } from '@clerk/clerk-react'
+import { useSession } from "next-auth/react";
 
-import { NextResponse } from 'next/server'
 import { ChangeEvent, useEffect, useState } from 'react'
 import getOneFilm from '@/buslogic/getOneFilm'
 
 const Navbar = () => {
     const [searchQuery, setSearchQuery] = useState<string>('')
     const [singleFilm, setSingleFilm] = useState<string>('')
+    const { data: session } = useSession();
+
+    console.log("Session data:", session); // Debugging log to check session data
+
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-        // getOneFilm(e.target.value)
         setSearchQuery(e.target.value)
     }
 
@@ -37,14 +38,12 @@ const Navbar = () => {
                     SMS Movie Tracker
                 </Link>
             </div>
+            
             {/* CENTER */}
-            {/* <div className='hidden md:flex w-[50%] text-sm items-center justify-between'> */}
             <div className="hidden md:flex w-[50%] text-sm items-center justify-evenly">
-                {/* LINKS */}
                 <div className='flex gap-6 textStyleBold'>
                     <Link href={'/'} className='flex gap-6'>    
                         <Image 
-                            // src="/home.png" 
                             src="/vercel.svg"
                             alt="Image description" 
                             width={16} 
@@ -53,7 +52,6 @@ const Navbar = () => {
                     </Link>
                     <Link href={'/'} className='flex gap-2'>    
                         <Image 
-                            // src="/home.png" 
                             src="/vercel.svg"
                             alt="Image description" 
                             width={16} 
@@ -62,7 +60,6 @@ const Navbar = () => {
                     </Link>
                     <Link href={'/'} className='flex gap-2'>    
                         <Image 
-                            // src="/home.png" 
                             src="/vercel.svg"
                             alt="Image description" 
                             width={16} 
@@ -85,23 +82,23 @@ const Navbar = () => {
                     {searchQuery && (
                         <div className='absolute top-full mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg'>
                             <ul>
-                                {/* Example dropdown items */}
                                 <li className='p-2 hover:bg-gray-100'>
                                     {singleFilm && (
                                         <Link 
-                                            href={`/film/${singleFilm}`}
-                                            // onClick={() => setSingleFilm('')}
-                                            >
+                                            href={`/film/${singleFilm}`}>
                                             {searchQuery}
                                         </Link>
                                     )}
                                 </li>
-                                {/* <li className='p-2 hover:bg-gray-100'>Result 2</li>
-                                <li className='p-2 hover:bg-gray-100'>Result 3</li> */}
                             </ul>
                         </div>
                     )}
                 </div>
+                {session && session.user && (
+                    <div className="text-sm text-gray-700">
+                        {/* Logged in as: {session.user.email} (ID: {session.user.name}) */}
+                    </div>
+                )}
                 <AuthBtn />
                 <MobileMenu />
             </div>
