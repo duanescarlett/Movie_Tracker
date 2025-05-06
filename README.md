@@ -11,6 +11,20 @@ Ensure you have the following installed on your system:
 - [Docker](https://www.docker.com/) (for running the database and other services)
 - [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
 
+### Node Version
+
+This project uses Node.js version specified in the `.nvmrc` file:
+
+```
+23.7.0
+```
+
+Ensure you are using this version by running:
+
+```bash
+nvm use
+```
+
 ### Installation
 
 1. Clone the repository:
