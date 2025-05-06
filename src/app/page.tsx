@@ -15,7 +15,6 @@ const [isLoading, setIsLoading] = useState(true);
       const films = await getAllFilms();
       setAllFilms(films.movies);
       setIsLoading(false);
-      console.log(films);
     };
     fetchFilms();
   }, []);

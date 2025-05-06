@@ -1,4 +1,8 @@
 import { FilmType } from "@/interfaceTypes/types";
+import logger from "@/services/logger";
+
+// Initialize the logger instance
+// const log = logger();
 
 const getFilmInfo = async (film: FilmType) => {
     // const user = await currentUser()
@@ -12,7 +16,7 @@ const getFilmInfo = async (film: FilmType) => {
         })
 
         const data = await res.json();
-        // console.log("This is the data from the business login layer: ", data)
+        // log.info("This is the data from the business login layer: ", data);
         if (res.ok) {
             // data.user = user;
             return data;

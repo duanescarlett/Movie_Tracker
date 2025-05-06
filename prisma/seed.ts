@@ -12,7 +12,6 @@ async function main() {
         password: process.env.POSTGRES_DB_TEST_PASSWORD || "default_password",
     }
   })
-  console.log({ user })
 }
 
 main()

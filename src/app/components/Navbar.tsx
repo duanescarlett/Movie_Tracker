@@ -13,8 +13,6 @@ const Navbar = () => {
     const [singleFilm, setSingleFilm] = useState<string>('')
     const { data: session } = useSession();
 
-    console.log("Session data:", session); // Debugging log to check session data
-
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value)
     }
@@ -23,7 +21,6 @@ const Navbar = () => {
         const fetchFilm = async () => {
             if (searchQuery) {
                 const film = await getOneFilm(searchQuery)
-                console.log(film)
                 setSingleFilm(film.movie.title)
             }
         }

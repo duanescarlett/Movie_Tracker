@@ -1,6 +1,10 @@
 import NextAuth, { User } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import getUser from '@/buslogic/getUser';
+import logger from "@/services/logger";
+
+// Initialize the logger instance
+// const log = logger();
 
 const handler = NextAuth({
     providers: [
@@ -28,7 +32,7 @@ const handler = NextAuth({
             password: credentials.password, 
           });
 
-          console.log("User Object: => ", user);
+          // log.info("User Object: => ", user);
           if (user == "Incorrect password" || user == "User not found") {
             return null;
           } else {

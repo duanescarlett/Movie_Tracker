@@ -1,7 +1,11 @@
 import { NewUser } from "@/interfaceTypes/types";
+import logger from "@/services/logger";
+
+// Initialize the logger instance
+// const log = logger();
 
 const getUser = async (user: NewUser) => {
-    console.log("Fetching user from:", `${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user.email}&password=${user.password}`);
+    // log.info("Fetching user from:", `${process.env.NEXT_PUBLIC_BASE_URL}/api/user?email=${user.email}&password=${user.password}`);
 
     try {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/read`, {

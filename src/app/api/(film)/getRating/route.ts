@@ -11,8 +11,7 @@ export async function GET(req: NextRequest) {
             where: { movieId: movieId },
             _avg: { rating: true },
           });
-        //   console.log(averageRating._avg.rating);
-        
+
         return NextResponse.json(averageRating._avg.rating);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });

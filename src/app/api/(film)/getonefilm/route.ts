@@ -1,5 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import logger from "@/services/logger";
+
+// Initialize the logger instance
+const log = logger();
 
 export async function GET(request: NextRequest) {
     try {
@@ -41,8 +45,7 @@ const insertInDatabase = async (title: string) => {
         throw new Error('Network response was not ok');
     }
     const responseBody = await response.text();
-    console.log("Response from API call: ", responseBody);
-
+ 
     const movieData = JSON.parse(responseBody);
 
     // First, split the comma-separated values into arrays
@@ -90,7 +93,7 @@ const insertInDatabase = async (title: string) => {
     });
 
     if (existingMovie) {
-        console.log("Movie already exists in the database.");
+        log.info("Movie already exists in the database.");
         return existingMovie;
     }
 

@@ -8,6 +8,19 @@ const nextConfig: NextConfig = {
         hostname: "**"
       }
     ]
+  },
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Exclude server-side modules from the client bundle
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        path: false,
+        os: false,
+        crypto: false,
+      };
+    }
+    return config;
   }
 };
 

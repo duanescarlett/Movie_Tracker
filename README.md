@@ -74,6 +74,31 @@ This project uses Prisma for database management. Ensure the database is running
 
 Create a `.env` file in the root directory and configure the required environment variables. Refer to `.env.example` (if available) for guidance.
 
+Below is the structure of the `.env` file required for this project. Ensure you replace the placeholder values with your actual configuration:
+
+```
+# Database Configuration
+DATABASE_URL=prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMTI3MzlkMGQtYjM5Zi00YzI3LWE5MDktMjFkNmQxMzdmZGExIiwidGVuYW50X2lkIjoiMTUxYmMzZDBmYTg2MmQ5ODM3OGRjMzIyZmQ5MDE4OTA1YWI1MDNjY2FmMTFkOWY3MGQ4MjQ5ODFlZjU0ZDkwMiIsImludGVybmFsX3NlY3JldCI6ImNlZGRhMTM1LTgwM2YtNGU3OC05MjdjLWMxYjgyYmRlOGVjOSJ9.soguA7I0FneuUaSFMsBO3jxkaCglOHZ1b9rDry6gei8
+POSTGRES_DB_TEST_PASSWORD=<your_test_db_password>
+
+# NextAuth Configuration
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=<your_nextauth_secret>
+
+# OMDB API Configuration
+OMDB_API=8e765993
+
+# JWT Configuration
+JWT_SECRET=<your_jwt_secret>
+
+# Logging Configuration
+LOG_LEVEL=info
+
+# Other Environment Variables
+NEXT_PUBLIC_BASE_URL=http://localhost:3000
+NODE_ENV=development
+```
+
 ### Testing
 
 Run the test suite using:
@@ -101,3 +126,14 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 The site is deployed on Vercel and can be accessed at the following URL:
 
 [https://movie-tracker-delta.vercel.app/](https://movie-tracker-delta.vercel.app/)
+
+## Known Issues
+
+1. **Next-auth is not creating JWT tokens and it is not passing the user to the session object**
+   - Investigate the NextAuth configuration and ensure the `jwt` and `session` callbacks are properly implemented.
+
+2. **Application has an internal server error in Production after the API request to the database**
+   - Debug the API routes and check for issues in the database queries or Prisma client usage.
+
+3. **Either testing environment with Jest is not properly configured or I am unable to correctly test the page**
+   - Verify the Jest configuration and ensure all necessary setup files and dependencies are correctly installed.

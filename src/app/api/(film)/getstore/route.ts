@@ -1,5 +1,9 @@
 import { NextResponse, NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
+import logger from "@/services/logger";
+
+// Initialize the logger instance
+// const log = logger();
 
 export async function POST(req: NextRequest) {
     try {
@@ -17,7 +21,7 @@ export async function POST(req: NextRequest) {
             throw new Error('Network response was not ok');
         }
         const responseBody = await response.text();
-        console.log("Response from API call: ", responseBody);
+        // log.info("Response from API call: ", responseBody);
 
         const movieData = JSON.parse(responseBody);
 
@@ -65,7 +69,7 @@ export async function POST(req: NextRequest) {
         });
     
         if (existingMovie) {
-            console.log("Movie already exists in the database.");
+            // log.info("Movie already exists in the database.");
             // return existingMovie;
             return NextResponse.json(existingMovie);
         }
@@ -96,7 +100,7 @@ export async function POST(req: NextRequest) {
             }
         });
 
-        console.log("Movie created:", movie);
+        // log.info("Movie created:", movie);
         
         return NextResponse.json(responseBody);
     } catch (error: any) {
