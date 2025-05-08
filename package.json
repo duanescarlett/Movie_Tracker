@@ -30,6 +30,7 @@
     "next-crypto": "^1.0.8",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-loading-skeleton": "^3.5.0",
     "ts-node": "^10.9.2",
     "winston": "^3.17.0",
     "winston-daily-rotate-file": "^5.0.0",

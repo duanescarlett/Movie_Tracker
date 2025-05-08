@@ -4,23 +4,38 @@ import Image from 'next/image';
 import { Film_Interface } from "@/interfaceTypes/interfaces"
 import getAllFilms from "@/buslogic/getAllFilms";
 import Link from "next/link";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Home() {
-
-const [allFilms, setAllFilms] = useState<Film_Interface[]>([]);
-const [isLoading, setIsLoading] = useState(true);
+  const [allFilms, setAllFilms] = useState<Film_Interface[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchFilms = async () => {
-      const films = await getAllFilms();
-      setAllFilms(films.movies);
-      setIsLoading(false);
+      try {
+        const films = await getAllFilms();
+        setAllFilms(films.movies);
+      } catch (err) {
+        setError("Failed to load movies. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchFilms();
   }, []);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container mx-auto mt-10">
+        <Skeleton count={6} height={200} className="mb-4" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="text-center text-red-500 mt-10">{error}</div>;
   }
 
   return (
@@ -39,7 +54,7 @@ const [isLoading, setIsLoading] = useState(true);
           <div key={index} className="flex justify-center">
             <div className="flex flex-col items-center">
               <Link href={`/film/${film.title}`}>
-                <img src={film.poster} alt={film.title} width={125} height={187} />
+                <img src={`${film.poster}`} alt={film.title} width={125} height={187} />
               </Link>
               <Link href={`/film/${film.title}`}>
                 <h3 className="text-xl font-medium text-center">{film?.title}</h3>

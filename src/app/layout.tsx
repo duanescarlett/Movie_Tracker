@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-// import { ClerkProvider } from '@clerk/nextjs';
 import "./globals.css";
 import Navbar from "@/app/components/Navbar";
-import { getServerSession } from "next-auth"
-// import { getSession } from "@/app/auth/auth";
-import SessionProvider from '@/lib/authProvider';
-import { Analytics } from "@vercel/analytics/react"
+import { getServerSession } from "next-auth";
+import { Analytics } from "@vercel/analytics/react";
+import SessionProvider from "@/lib/authProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,28 +27,25 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await getServerSession();
-  // const sessionData = await verifySession();
+
   return (
-    // <ClerkProvider>
+    <>
       <SessionProvider session={session}>
-      <html lang="en">
-        <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <>
+        <html lang="en">
+          <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
             <div className="w-full bg-blue-900 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
-              {/* <Navbar sessionData={sessionData} /> */}
               <Navbar />
             </div>
-            
+
             <div className="w-full bg-white px-4 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
               {children}
               <Analytics />
             </div>
-          </>
-        </body>
-      </html>
-    </SessionProvider>
-    // </ClerkProvider>
+          </body>
+        </html>
+      </SessionProvider>
+    </>
   );
 }
