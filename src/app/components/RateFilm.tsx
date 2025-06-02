@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import rateFilm from "@/buslogic/addRating";
+import { useSession } from "next-auth/react";
 
 interface RateFilmProps {
   movieId: string;
@@ -10,7 +11,7 @@ interface RateFilmProps {
 const RateFilm: React.FC<RateFilmProps> = ({ movieId, userId }) => {
   const [rating, setRating] = useState<number | null>(null);
   const [message, setMessage] = useState<string | null>(null);
-
+  const { data: session } = useSession();
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (rating === null) {
@@ -19,7 +20,7 @@ const RateFilm: React.FC<RateFilmProps> = ({ movieId, userId }) => {
     }
 
     try {
-      const response = await rateFilm(rating, userId || "", movieId);
+      const response = await rateFilm(rating, session?.user.id as string, movieId);
       if (typeof response === "string") {
         setMessage(`Error: ${response}`);
       } else {
@@ -54,7 +55,7 @@ const RateFilm: React.FC<RateFilmProps> = ({ movieId, userId }) => {
           Submit Rating
         </button>
       </form>
-      {message && <p className="mt-2 text-sm text-gray-700">{message}</p>}
+      {/* {message && <p className="mt-2 text-sm text-gray-700">{message}</p>} */}
     </div>
   );
 };

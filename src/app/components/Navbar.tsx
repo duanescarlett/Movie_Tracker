@@ -92,8 +92,8 @@ const Navbar = () => {
                     )}
                 </div>
                 {session && session.user && (
-                    <div className="text-sm text-gray-700">
-                        {/* Logged in as: {session.user.email} (ID: {session.user.name}) */}
+                    <div>
+                        Logged in as: {session.user.email}
                     </div>
                 )}
                 <AuthBtn />

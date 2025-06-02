@@ -21,7 +21,7 @@ const getUser = async (user: NewUser) => {
             return data.error;
         } else {
             const data = await res.json();
-            if (data.success) return JSON.stringify(data.user);
+            if (data.success) return data.user; // Return the user object directly
         }
         
     } catch (error) {
